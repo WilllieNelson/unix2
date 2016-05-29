@@ -93,21 +93,44 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 	}
 }
 
-// int main() {
-// 	//fd stands for file description
-// 		fd_set master; // declare master file descriptors
-// 		fd_set read_fds; //// declare read socket descriptiors
-// 	//set addr
-// 		int fdmax, i;
-// 		int sockfd = 0;
-// 		struct sockaddr_in my_addr, client_addr;
+int main() {
+	//fd stands for file description
+		fd_set master; // declare master file descriptors
+		fd_set read_fds; //// declare read socket descriptors
+	//set addr
+		int fdmax, i;
+		int sockfd = 0;
+		struct sockaddr_in my_addr, client_addr;
 
-// 	//Clear entries from the master set
-// 		FD_ZERO(&master);
-// 	//Clear entries from read socket set
-// 		FD_ZERO(&read_fds);
-// 	//Run connect request function
-// 		connect_request(&sockfd, &my_addr);
+	//Clear entries from the master set
+		FD_ZERO(&master);
+	//Clear entries from read socket set
+		FD_ZERO(&read_fds);
+	//Run connect request function
+		connect_request(&sockfd, &my_addr);
+	//Add a descriptor sockfd to an fd_set (master)
+		FD_SET(sockfd, &master);
 
-// 	return 0;
-// }
+		fdmax = sockfd;
+		while(1){
+			read_fds = master ;
+			// wait for an activity on one of the sockets, timeout is NULL, so wait indefinitely
+				if(select(fdmax+1, &read_fds, NULL, NULL, NULL) == -1){
+					perror("select");
+					exit(4);
+				}
+
+				for (i = 0; i <= fdmax; i++){
+					if (FD_ISSET(i, &read_fds)){
+						//If something happened on the master socket, then its an incoming connection
+							if (i == sockfd)
+								connection_accept(&master, &fdmax, sockfd, &client_addr);
+						//else its some IO operation on some other socket
+							else
+								send_recv(i, &master, sockfd, fdmax);
+					}
+				}
+		}
+
+	return 0;
+}

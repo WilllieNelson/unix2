@@ -43,22 +43,71 @@ void connect_request(int *sockfd, struct sockaddr_in *my_addr)
 		fflush(stdout);
 
 }
+//sockfd is the usual socket file descriptor from the socket() system call, its the number of connections allowed on the incoming queue
+void connection_accept(fd_set *master, int *fdmax, int sockfd, struct sockaddr_in *client_addr)
+{
+	socklen_t addrlen;
+	int newsockfd;
 
-int main() {
-	//fd stands for file description
-		fd_set master; // declare master file descriptors
-		fd_set read_fds; //// declare read socket descriptiors
-	//set addr
-		int fdmax, i;
-		int sockfd = 0;
-		struct sockaddr_in my_addr, client_addr;
-
-	//Clear entries from the master set
-		FD_ZERO(&master);
-	//Clear entries from read socket set
-		FD_ZERO(&read_fds);
-	//Run connect request function
-		connect_request(&sockfd, &my_addr);
-
-	return 0;
+	addrlen = sizeof(struct sockaddr_in);
+	if((newsockfd = accept(sockfd, (struct sockaddr *)client_addr, &addrlen)) == -1)
+	{
+		perror("accept");
+		exit(1);	
+	} else {
+		FD_SET(newsockfd, master);
+		if (newsockfd > *fdmax) {
+			*fdmax = newsockfd;
+		}
+		printf("new connection from %s on port %d \n", inet_ntoa(client_addr->sin_addr), ntohs(client_addr->sin_port));
+	}
 }
+// The FD_ISSET function returns true if FD is in the set
+void send_to_all(int j, int i, int sockfd, int nbytes_recvd, char *recv_buf, fd_set *master){
+	if (FD_ISSET(j, master)){
+		if (j != sockfd && j != i) {
+			if (send(j, recv_buf, nbytes_recvd, 0) == -1){
+				perror("send");
+			}
+		}
+	}
+}
+
+void send_recv(int i, fd_set *master, int sockfd, int fdmax)
+{
+	int nbytes_recvd, j;
+	char recv_buf[BUFSIZE], buf[BUFSIZE];
+
+	if ((nbytes_recvd = recv(i, recv_buf, BUFSIZE, 0)) <= 0){
+		if (nbytes_recvd == 0){
+			printf("socket %d hung up\n", i);
+		} else {
+			perror("recv");
+		}
+		close(i);
+		FD_CLR(i, master);
+	} else {
+		for(j = 0; j <= fdmax; j++){
+			send_to_all(j, i, sockfd, nbytes_recvd, recv_buf, master);
+		}
+	}
+}
+
+// int main() {
+// 	//fd stands for file description
+// 		fd_set master; // declare master file descriptors
+// 		fd_set read_fds; //// declare read socket descriptiors
+// 	//set addr
+// 		int fdmax, i;
+// 		int sockfd = 0;
+// 		struct sockaddr_in my_addr, client_addr;
+
+// 	//Clear entries from the master set
+// 		FD_ZERO(&master);
+// 	//Clear entries from read socket set
+// 		FD_ZERO(&read_fds);
+// 	//Run connect request function
+// 		connect_request(&sockfd, &my_addr);
+
+// 	return 0;
+// }

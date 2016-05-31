@@ -104,7 +104,7 @@ void send_recv(int i, int sockfd, char c_name[])
  void transf_msg(char *send_buf, char c_name[]){
  	char c[BUFSIZE];
  	char d[BUFSIZE];
- 	strcpy(c,": ");
+ 	strcpy(c,":");
  	strcpy(d,c_name);
  	strcat(c,send_buf);
  	strcat(d,c);

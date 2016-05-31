@@ -7,6 +7,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <time.h>
+
 	
 #define PORT 5000
 #define BUFSIZE 1024
@@ -83,23 +85,49 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 	int nbytes_recvd, j;
 	char recv_buf[BUFSIZE], buf[BUFSIZE];
 
+	time_t rawtime;
+	char recv_time[26];
+	struct tm * timeinfo;
+
 	if ((nbytes_recvd = recv(i, recv_buf, BUFSIZE, 0)) <= 0){
+		
 		if (nbytes_recvd == 0){
 			printf("socket %d hung up\n", i);
 		} else {
 			perror("recv");
 		}
-
 		close(i);
 		FD_CLR(i, master);
+
+		time(&rawtime);
+    	timeinfo = localtime(&rawtime);
+		strftime(recv_time, 26, "%Y:%m:%d %H:%M:%S", timeinfo);
+
 	} else {
 		for(j = 0; j <= fdmax; j++){
 			send_to_all(j, i, sockfd, nbytes_recvd, recv_buf, master);
 		}
 	}
-	printf("%s",recv_buf);
+//	printf("%s at %s",recv_buf,recv_time);
+	puts(recv_time);
+//	printf("%s",recv_time);
+	saveTo_dataBase(recv_time, recv_buf);
 }
+void saveTo_dataBase(char recv_time[], char recv_buf[])
+{
+	FILE *pFile;
+	pFile = fopen("database.txt", "a");
 
+	if (pFile != NULL){
+		fprintf(pFile, "%s:%s\n",recv_time,recv_buf);
+		fclose(pFile);
+	}
+	else
+	{
+	  printf("Could not open the file. \n");
+	}
+
+}
 int main() {
 	//fd stands for file description
 		fd_set master; // declare master file descriptors

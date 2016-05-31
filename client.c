@@ -80,7 +80,7 @@ void set_clear(int sockfd, fd_set *read_fds, fd_set *master)
         FD_SET(sockfd, master);
 }
 
-void send_recv(int i, int sockfd)
+void send_recv(int i, int sockfd, char c_name[])
 {
 	char send_buf[BUFSIZE];
 	char recv_buf[BUFSIZE];
@@ -91,6 +91,8 @@ void send_recv(int i, int sockfd)
 		if (strcmp(send_buf , "quit\n") == 0 || strcmp(send_buf , "QUIT\n") == 0) {
 			exit(0);
 		}else
+		    //snprintf(send_buf, sizeof(send_buf), "%s: %s", c_name, send_buf);
+			transf_msg(&send_buf, c_name);
 			send(sockfd, send_buf, strlen(send_buf), 0);
 	}else {
 		nbyte_recvd = recv(sockfd, recv_buf, BUFSIZE, 0);
@@ -99,6 +101,16 @@ void send_recv(int i, int sockfd)
 		fflush(stdout);
 	}
 }
+ void transf_msg(char *send_buf, char c_name[]){
+ 	char c[BUFSIZE];
+ 	char d[BUFSIZE];
+ 	strcpy(c,": ");
+ 	strcpy(d,c_name);
+ 	strcat(c,send_buf);
+ 	strcat(d,c);
+ 	strcpy(send_buf,d);
+ 	printf("%s\n",send_buf);
+ }
 
 int main(int argc, char *argv[])
 {
@@ -125,7 +137,7 @@ int main(int argc, char *argv[])
 		}
 		for(i=0; i <= fdmax; i++ ){
 			if(FD_ISSET(i, &read_fds))
-				send_recv(i, sockfd);
+				send_recv(i, sockfd, c_name);
 			
 		}
 	}

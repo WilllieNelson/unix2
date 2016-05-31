@@ -11,6 +11,8 @@
 #define PORT 5000
 #define BUFSIZE 1024
 //
+#define id 9
+char listeners[id];
 void connect_request(int *sockfd, struct sockaddr_in *my_addr)
 {
 		int yes = 1; // value in setsockopt function to
@@ -48,6 +50,7 @@ void connection_accept(fd_set *master, int *fdmax, int sockfd, struct sockaddr_i
 {
 	socklen_t addrlen;
 	int newsockfd;
+	char recv_buf[BUFSIZE];
 
 	addrlen = sizeof(struct sockaddr_in);
 	if((newsockfd = accept(sockfd, (struct sockaddr *)client_addr, &addrlen)) == -1)
@@ -59,7 +62,9 @@ void connection_accept(fd_set *master, int *fdmax, int sockfd, struct sockaddr_i
 		if (newsockfd > *fdmax) {
 			*fdmax = newsockfd;
 		}
+		//recv(sockfd, recv_buf, BUFSIZE, 0);
 		printf("new connection from %s on port %d \n", inet_ntoa(client_addr->sin_addr), ntohs(client_addr->sin_port));
+		//printf("%s \n",recv_buf);
 	}
 }
 // The FD_ISSET function returns true if FD is in the set
@@ -84,6 +89,7 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 		} else {
 			perror("recv");
 		}
+
 		close(i);
 		FD_CLR(i, master);
 	} else {
@@ -91,6 +97,7 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 			send_to_all(j, i, sockfd, nbytes_recvd, recv_buf, master);
 		}
 	}
+	printf("%s",recv_buf);
 }
 
 int main() {

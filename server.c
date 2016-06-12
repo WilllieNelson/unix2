@@ -79,7 +79,8 @@ void send_to_all(int j, int i, int sockfd, int nbytes_recvd, char *recv_buf, fd_
 		}
 	}
 }
-
+/*Added received time to the function, then each time it reiceive a message,
+, it will send to all other clients, and also that message to database*/
 void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 {
 	int nbytes_recvd, j;
@@ -98,11 +99,10 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 		}
 		close(i);
 		FD_CLR(i, master);
-
+	//set receive message time
 		time(&rawtime);
     	timeinfo = localtime(&rawtime);
 		strftime(recv_time, 26, "%Y:%m:%d %H:%M:%S", timeinfo);
-
 	} else {
 		for(j = 0; j <= fdmax; j++){
 			send_to_all(j, i, sockfd, nbytes_recvd, recv_buf, master);
@@ -119,8 +119,8 @@ void saveTo_dataBase(char recv_time[], char recv_buf[])
 	pFile = fopen("database.txt", "a");
 
 	if (pFile != NULL){
-		fprintf(pFile, "%s:%s\n",recv_time,recv_buf);
-		fclose(pFile);
+	  fprintf(pFile, "%s:%s\n",recv_time,recv_buf);
+	  fclose(pFile);
 	}
 	else
 	{

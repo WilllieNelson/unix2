@@ -79,6 +79,16 @@ void send_to_all(int j, int i, int sockfd, int nbytes_recvd, char *recv_buf, fd_
 		}
 	}
 }
+void split_text(char *recv_buf){
+	int k;
+	for (k=0;k<strlen(recv_buf);k++){
+		if (recv_buf[k] == ':'){
+			strncpy(user_name,recv_buf,k);
+			strncpy(message,&recv_buf[k+1],strlen(recv_buf)-k);
+			break;
+		}
+	}
+}
 /*Added received time to the function, then each time it reiceive a message,
 , it will send to all other clients, and also that message to database*/
 void send_recv(int i, fd_set *master, int sockfd, int fdmax)
@@ -86,12 +96,11 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 	int nbytes_recvd, j;
 	char recv_buf[BUFSIZE], buf[BUFSIZE];
 
-	time_t rawtime;
-	char recv_time[26];
-	struct tm * timeinfo;
+	// time_t rawtime;
+	// char recv_time[26];
+	// struct tm * timeinfo;
 
 	if ((nbytes_recvd = recv(i, recv_buf, BUFSIZE, 0)) <= 0){
-		
 		if (nbytes_recvd == 0){
 			printf("socket %d hung up\n", i);
 		} else {
@@ -100,16 +109,18 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 		close(i);
 		FD_CLR(i, master);
 	//set receive message time
-		time(&rawtime);
-    	timeinfo = localtime(&rawtime);
-		strftime(recv_time, 26, "%Y:%m:%d %H:%M:%S", timeinfo);
+		// time(&rawtime);
+  //   	timeinfo = localtime(&rawtime);
+		// strftime(recv_time, 26, "%Y:%m:%d %H:%M:%S", timeinfo);
 	} else {
+		printf("%s\n", recv_buf);
 		for(j = 0; j <= fdmax; j++){
 			send_to_all(j, i, sockfd, nbytes_recvd, recv_buf, master);
 		}
 	}
 //	printf("%s at %s",recv_buf,recv_time);
-	puts(recv_time);
+	
+//	puts(recv_time);
 //	printf("%s",recv_time);
 	saveTo_dataBase(recv_time, recv_buf);
 }

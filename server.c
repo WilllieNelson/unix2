@@ -8,7 +8,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <time.h>
-
+#include <sqlite3.h> 
 	
 #define PORT 5000
 #define BUFSIZE 1024
@@ -79,15 +79,57 @@ void send_to_all(int j, int i, int sockfd, int nbytes_recvd, char *recv_buf, fd_
 		}
 	}
 }
-void split_text(char *recv_buf){
+static int callback(void *NotUsed, int argc, char **argv, char **azColName)
+{
+   int i;
+   for(i=0; i<argc; i++){
+      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+   }
+   printf("\n");
+   return 0;
+}
+void saveTo_dataBase(char *recv_buf)
+{
 	int k;
-	for (k=0;k<strlen(recv_buf);k++){
+	char user_name[100];
+	char message[BUFSIZE];
+
+   sqlite3 *db;
+   char *zErrMsg = 0;
+   int rc;
+   char *sql;
+   //Split the recieve buff to user name and message
+    for (k=0;k<strlen(recv_buf);k++){
 		if (recv_buf[k] == ':'){
 			strncpy(user_name,recv_buf,k);
 			strncpy(message,&recv_buf[k+1],strlen(recv_buf)-k);
 			break;
 		}
 	}
+
+   /* Open database */
+   rc = sqlite3_open("chat.db", &db);
+   if( rc ){
+      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+      exit(0);
+   }/*else{
+      fprintf(stderr, "Opened database successfully\n");
+   } */
+
+   /* Create SQL statement */
+   // sql = "INSERT INTO CHATSESSION (NAME,MESSAGE)" \
+   //       "VALUES ('%s', '%s');",user_name,message;
+    sprintf(sql,"INSERT INTO CHATSESSION (NAME,MESSAGE) VALUES ('%s', '%s');",user_name,message);
+
+   /* Execute SQL statement */
+   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+   if( rc != SQLITE_OK ){
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+   }/*else{
+      fprintf(stdout, "Records created successfully\n");
+   }*/
+   sqlite3_close(db);
 }
 /*Added received time to the function, then each time it reiceive a message,
 , it will send to all other clients, and also that message to database*/
@@ -95,7 +137,6 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 {
 	int nbytes_recvd, j;
 	char recv_buf[BUFSIZE], buf[BUFSIZE];
-
 	// time_t rawtime;
 	// char recv_time[26];
 	// struct tm * timeinfo;
@@ -109,36 +150,33 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 		close(i);
 		FD_CLR(i, master);
 	//set receive message time
-		// time(&rawtime);
-  //   	timeinfo = localtime(&rawtime);
-		// strftime(recv_time, 26, "%Y:%m:%d %H:%M:%S", timeinfo);
+	// time(&rawtime);
+    //   	timeinfo = localtime(&rawtime);
+	// strftime(recv_time, 26, "%Y:%m:%d %H:%M:%S", timeinfo);
 	} else {
-		printf("%s\n", recv_buf);
+//		printf("%s\n", recv_buf);
 		for(j = 0; j <= fdmax; j++){
 			send_to_all(j, i, sockfd, nbytes_recvd, recv_buf, master);
 		}
 	}
 //	printf("%s at %s",recv_buf,recv_time);
-	
-//	puts(recv_time);
 //	printf("%s",recv_time);
-	saveTo_dataBase(recv_time, recv_buf);
+	saveTo_dataBase(&recv_buf);
 }
-void saveTo_dataBase(char recv_time[], char recv_buf[])
-{
-	FILE *pFile;
-	pFile = fopen("database.txt", "a");
+// void saveTo_dataBase(char recv_time[], char recv_buf[])
+// {
+// 	FILE *pFile;
+// 	pFile = fopen("database.txt", "a");
 
-	if (pFile != NULL){
-	  fprintf(pFile, "%s:%s\n",recv_time,recv_buf);
-	  fclose(pFile);
-	}
-	else
-	{
-	  printf("Could not open the file. \n");
-	}
+// 	if (pFile != NULL){
+// 	  fprintf(pFile, "%s:%s\n",recv_time,recv_buf);
+// 	  fclose(pFile);
+// 	}
+// 	else
+// 	{
+// 	  printf("Could not open the file. \n");
+// 	}
 
-}
 int main() {
 	//fd stands for file description
 		fd_set master; // declare master file descriptors
@@ -177,6 +215,5 @@ int main() {
 					}
 				}
 		}
-
 	return 0;
 }

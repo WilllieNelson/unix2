@@ -29,9 +29,8 @@ int main(int argc, char* argv[])
 
    /* Create SQL statement */
    sql = "CREATE TABLE CHATSESSION("  \
-         "NAME           TEXT    NOT NULL," \
-         "MESSAGE        CHAR(100)     NOT NULL," \
-         "TIME           TEXT );";
+         "NAME           VARCHAR(30)   NOT NULL," \
+         "MESSAGE        TEXT      );" ;
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);

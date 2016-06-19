@@ -91,8 +91,8 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 void saveTo_dataBase(char *recv_buf)
 {
 	int k;
-	char user_name[100];
-	char message[BUFSIZE];
+	char user_name[100] = " ";
+	char message[BUFSIZE] = " ";
 
    sqlite3 *db;
    char *zErrMsg = 0;
@@ -136,7 +136,7 @@ void saveTo_dataBase(char *recv_buf)
 void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 {
 	int nbytes_recvd, j;
-	char recv_buf[BUFSIZE], buf[BUFSIZE];
+	char recv_buf[BUFSIZE] = " ";
 	// time_t rawtime;
 	// char recv_time[26];
 	// struct tm * timeinfo;
@@ -151,17 +151,19 @@ void send_recv(int i, fd_set *master, int sockfd, int fdmax)
 		FD_CLR(i, master);
 	//set receive message time
 	// time(&rawtime);
-    //   	timeinfo = localtime(&rawtime);
+    //   	timeinfo = localtime(&rawtime); 
 	// strftime(recv_time, 26, "%Y:%m:%d %H:%M:%S", timeinfo);
 	} else {
-//		printf("%s\n", recv_buf);
+		// recv_buf = ' ';
+		printf("%s\n", recv_buf);
+		saveTo_dataBase(&recv_buf);
 		for(j = 0; j <= fdmax; j++){
 			send_to_all(j, i, sockfd, nbytes_recvd, recv_buf, master);
 		}
 	}
 //	printf("%s at %s",recv_buf,recv_time);
 //	printf("%s",recv_time);
-	saveTo_dataBase(&recv_buf);
+	
 }
 // void saveTo_dataBase(char recv_time[], char recv_buf[])
 // {

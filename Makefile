@@ -14,8 +14,8 @@ client: client.c
 createdb:
 	$(CC) createdb.c $(SQ) -o createdb.out
 Son:
-	./client.out -s 192.168.100.2:5000 -p 5000 -n Son
+	./client.out -s 192.168.0.132:5000 -p 5000 -n Son
 SnoopDogg:
-	./client.out -s 192.168.100.2:5000 -p 5000 -n Snoop
+	./client.out -s 192.168.0.132:5000 -p 5000 -n Snoop
 clean:
 	rm -rf *.out

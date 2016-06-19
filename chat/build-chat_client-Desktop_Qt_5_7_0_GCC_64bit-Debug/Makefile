@@ -50,11 +50,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../chat_client/main.cpp \
 		../chat_client/mainwindow.cpp \
-		../chat_client/client.cpp moc_mainwindow.cpp
+		../chat_client/client.cpp moc_mainwindow.cpp \
+		moc_client.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		client.o \
-		moc_mainwindow.o
+		moc_mainwindow.o \
+		moc_client.o
 DIST          = ../../../../QTprog/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../QTprog/5.7/gcc_64/mkspecs/common/unix.conf \
 		../../../../QTprog/5.7/gcc_64/mkspecs/common/linux.conf \
@@ -220,7 +222,7 @@ TARGET        = chat_client
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_client.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../chat_client/chat_client.pro ../../../../QTprog/5.7/gcc_64/mkspecs/linux-g++/qmake.conf ../../../../QTprog/5.7/gcc_64/mkspecs/features/spec_pre.prf \
@@ -554,7 +556,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../chat_client/mainwindow.h ../chat_client/client.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../chat_client/main.cpp ../chat_client/mainwindow.cpp ../chat_client/client.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../chat_client/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../chat_client/mainwindow.ui ../chat_client/client.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -580,9 +582,9 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_client.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_client.cpp
 moc_mainwindow.cpp: ../../../../QTprog/5.7/gcc_64/include/QtWidgets/QMainWindow \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -684,22 +686,133 @@ moc_mainwindow.cpp: ../../../../QTprog/5.7/gcc_64/include/QtWidgets/QMainWindow 
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../../QTprog/5.7/gcc_64/include/QtGui/qicon.h \
 		../chat_client/client.h \
-		../../../../QTprog/5.7/gcc_64/include/QtCore/QObject \
-		../../../../QTprog/5.7/gcc_64/include/QtCore/QSharedDataPointer \
-		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QWidget \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QDialog \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qdialog.h \
 		../chat_client/mainwindow.h \
 		../chat_client/mainwindow.h \
 		../../../../QTprog/5.7/gcc_64/bin/moc
 	/home/sean/QTprog/5.7/gcc_64/bin/moc $(DEFINES) -I/home/sean/QTprog/5.7/gcc_64/mkspecs/linux-g++ -I'/home/sean/Unix project/unix2/chat/chat_client' -I/home/sean/QTprog/5.7/gcc_64/include -I/home/sean/QTprog/5.7/gcc_64/include/QtWidgets -I/home/sean/QTprog/5.7/gcc_64/include/QtGui -I/home/sean/QTprog/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../chat_client/mainwindow.h -o moc_mainwindow.cpp
 
+moc_client.cpp: ../../../../QTprog/5.7/gcc_64/include/QtWidgets/QDialog \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qdialog.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qwidget.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qglobal.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qconfig.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qfeatures.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qtypetraits.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qisenum.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qsysinfo.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qlogging.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qflags.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qatomic.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qmutex.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qnumeric.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qversiontagging.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qnamespace.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qobject.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qstring.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qchar.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qbytearray.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qrefcount.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qarraydata.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qlist.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qalgorithms.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qiterator.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qpair.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qstringlist.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qregexp.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qcoreevent.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qmetatype.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qobject_impl.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qmargins.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qrect.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qsize.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qpoint.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qpalette.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qcolor.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qrgb.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qrgba64.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qbrush.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qvector.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qmatrix.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qpolygon.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qregion.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qdatastream.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qiodevice.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qline.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qtransform.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qpainterpath.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qimage.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qpixelformat.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qpixmap.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qshareddata.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qhash.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qfont.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qfontinfo.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qcursor.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qkeysequence.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qevent.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qvariant.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qmap.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qdebug.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qtextstream.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qlocale.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qset.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qurl.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qurlquery.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qfile.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qfiledevice.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qvector2d.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qtouchdevice.h \
+		../chat_client/mainwindow.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QMainWindow \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qicon.h \
+		../chat_client/client.h \
+		../chat_client/client.h \
+		../../../../QTprog/5.7/gcc_64/bin/moc
+	/home/sean/QTprog/5.7/gcc_64/bin/moc $(DEFINES) -I/home/sean/QTprog/5.7/gcc_64/mkspecs/linux-g++ -I'/home/sean/Unix project/unix2/chat/chat_client' -I/home/sean/QTprog/5.7/gcc_64/include -I/home/sean/QTprog/5.7/gcc_64/include/QtWidgets -I/home/sean/QTprog/5.7/gcc_64/include/QtGui -I/home/sean/QTprog/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../chat_client/client.h -o moc_client.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_client.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_client.h
 ui_mainwindow.h: ../chat_client/mainwindow.ui \
 		../../../../QTprog/5.7/gcc_64/bin/uic
 	/home/sean/QTprog/5.7/gcc_64/bin/uic ../chat_client/mainwindow.ui -o ui_mainwindow.h
+
+ui_client.h: ../chat_client/client.ui \
+		../../../../QTprog/5.7/gcc_64/bin/uic
+	/home/sean/QTprog/5.7/gcc_64/bin/uic ../chat_client/client.ui -o ui_client.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -813,9 +926,8 @@ main.o: ../chat_client/main.cpp ../chat_client/mainwindow.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../../QTprog/5.7/gcc_64/include/QtGui/qicon.h \
 		../chat_client/client.h \
-		../../../../QTprog/5.7/gcc_64/include/QtCore/QObject \
-		../../../../QTprog/5.7/gcc_64/include/QtCore/QSharedDataPointer \
-		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QWidget \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QDialog \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qdialog.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QApplication \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qapplication.h \
 		../../../../QTprog/5.7/gcc_64/include/QtCore/qcoreapplication.h \
@@ -927,9 +1039,8 @@ mainwindow.o: ../chat_client/mainwindow.cpp ../chat_client/mainwindow.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../../QTprog/5.7/gcc_64/include/QtGui/qicon.h \
 		../chat_client/client.h \
-		../../../../QTprog/5.7/gcc_64/include/QtCore/QObject \
-		../../../../QTprog/5.7/gcc_64/include/QtCore/QSharedDataPointer \
-		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QWidget \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QDialog \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qdialog.h \
 		ui_mainwindow.h \
 		../../../../QTprog/5.7/gcc_64/include/QtCore/QVariant \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QAction \
@@ -983,12 +1094,13 @@ mainwindow.o: ../chat_client/mainwindow.cpp ../chat_client/mainwindow.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qboxlayout.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qlayout.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qgridlayout.h
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../chat_client/mainwindow.cpp
 
 client.o: ../chat_client/client.cpp ../chat_client/client.h \
-		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QMainWindow \
-		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QDialog \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qdialog.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qwidget.h \
 		../../../../QTprog/5.7/gcc_64/include/QtGui/qwindowdefs.h \
 		../../../../QTprog/5.7/gcc_64/include/QtCore/qglobal.h \
@@ -1085,16 +1197,55 @@ client.o: ../chat_client/client.cpp ../chat_client/client.h \
 		../../../../QTprog/5.7/gcc_64/include/QtCore/qfiledevice.h \
 		../../../../QTprog/5.7/gcc_64/include/QtGui/qvector2d.h \
 		../../../../QTprog/5.7/gcc_64/include/QtGui/qtouchdevice.h \
+		../chat_client/mainwindow.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QMainWindow \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../../QTprog/5.7/gcc_64/include/QtGui/qicon.h \
-		../../../../QTprog/5.7/gcc_64/include/QtCore/QObject \
-		../../../../QTprog/5.7/gcc_64/include/QtCore/QSharedDataPointer \
-		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QWidget \
-		../chat_client/mainwindow.h
+		ui_client.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/QVariant \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QAction \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qaction.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QApplication \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qapplication.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qeventloop.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qguiapplication.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QButtonGroup \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qbuttongroup.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QHeaderView \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qframe.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../QTprog/5.7/gcc_64/include/QtGui/qvalidator.h \
+		../../../../QTprog/5.7/gcc_64/include/QtCore/qregularexpression.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qslider.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qstyle.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QMenuBar \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qmenubar.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qmenu.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QStatusBar \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/qstatusbar.h \
+		../../../../QTprog/5.7/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o client.o ../chat_client/client.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_client.o: moc_client.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_client.o moc_client.cpp
 
 ####### Install
 

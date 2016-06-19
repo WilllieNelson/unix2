@@ -24,8 +24,8 @@ void MainWindow::on_pushButton_clicked()
     c_port = QString(temp).toStdString()[0];
     temp = ui->label_cname->text();
     c_name = QString(temp).toStdString()[0];
-    this->hide();
-    Client client;
-    client.setModal(true);
-    client.exec();
+//    this->hide();
+//    client c;
+//    c.setModal(true);
+//    c.exec();
 }

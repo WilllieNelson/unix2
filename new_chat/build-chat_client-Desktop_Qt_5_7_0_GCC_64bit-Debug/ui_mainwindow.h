@@ -20,7 +20,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTextEdit>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -35,7 +35,7 @@ public:
     QPushButton *pushButton_send;
     QPushButton *pushButton_connect;
     QLabel *label;
-    QTextEdit *chatBox;
+    QTextBrowser *chatBox;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -62,7 +62,7 @@ public:
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(0, 0, 111, 21));
-        chatBox = new QTextEdit(centralWidget);
+        chatBox = new QTextBrowser(centralWidget);
         chatBox->setObjectName(QStringLiteral("chatBox"));
         chatBox->setGeometry(QRect(0, 30, 401, 171));
         MainWindow->setCentralWidget(centralWidget);

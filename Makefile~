@@ -13,6 +13,8 @@ client: client.c
 	$(CC) client.c -o client.out
 createdb:
 	$(CC) createdb.c $(SQ) -o createdb.out
+search:
+	$(CC) search.c $(SQ) -o search.out
 Son:
 	./client.out -s 192.168.100.2:5000 -p 5000 -n Son
 SnoopDogg:

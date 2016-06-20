@@ -14,7 +14,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+// Push button connected save username and make new connection
 void MainWindow::on_pushButton_connect_clicked()
 {
     socket = new QTcpSocket(this);
@@ -23,7 +23,7 @@ void MainWindow::on_pushButton_connect_clicked()
     socket->connectToHost("localhost", 5000);
     username =  ui->lineEdit_cname->text();
 }
-
+//Send message to server, add username  before the message
 void MainWindow::on_pushButton_send_clicked()
 {
     QString message = ui->lineEdit_message->text().trimmed();
@@ -42,12 +42,12 @@ void MainWindow::readyRead()
     while(socket->canReadLine())
     {
         inmessage = QString::fromUtf8(socket->readLine()).trimmed();
-
+        qDebug() << inmessage;
         ui->chatBox->append(inmessage);
-
     }
 //    nbyte_recvd = recv(0,recv_buf,BUFSIZE,0);
-//    inmessage = QString::fromUtf16((ushort*)(recv_buf));
+//      qDebug() << recv_buf;
+//     inmessage = QString::fromUtf8(recv_buff).trimmed();
 //    qDebug() << inmessage;
 //    ui->chatBox->append(inmessage);
 }

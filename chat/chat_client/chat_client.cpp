@@ -1,18 +1,19 @@
-#include "client.h"
-#include "ui_client.h"
+#include "chat_client.h"
+#include "ui_chat_client.h"
 
-client::client(QWidget *parent) :
+chat_client::chat_client(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::client)
+    ui(new Ui::chat_client)
 {
     ui->setupUi(this);
 }
 
-client::~client()
+chat_client::~chat_client()
 {
     delete ui;
 }
-client::connectto_server(int *sockfd, struct sockaddr_in *server_addr, struct sockaddr_in *my_addr, char *s_port, char *c_port, char *ip)
+
+chat_client::connectto_server(int *sockfd, struct sockaddr_in *server_addr, struct sockaddr_in *my_addr, char *s_port, char *c_port, char *ip)
 {
     if ((*sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         perror("Socket");

@@ -17,5 +17,7 @@ Son:
 	./client.out -s 192.168.100.2:5000 -p 5000 -n Son
 SnoopDogg:
 	./client.out -s 192.168.100.2:5000 -p 5000 -n Snoop
+Hardwell:
+	./client.out -s 192.168.100.2:5000 -p 5000 -n Hardwell
 clean:
 	rm -rf *.out

@@ -11,7 +11,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <errno.h>
-#include "client.h"
+
 #define BUFSIZE 2000
 #define SIZE 20
 

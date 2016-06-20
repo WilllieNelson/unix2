@@ -10,6 +10,13 @@
 	
 #define BUFSIZE 2000
 #define SIZE 20
+#define ANSI_COLOR_RED     "\x1b[7;91m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
 
 void getserverip_port(char **args, char *ip, char *s_port){
 	char **arg1;
@@ -97,19 +104,20 @@ void send_recv(int i, int sockfd, char c_name[])
 	}else {
 		nbyte_recvd = recv(sockfd, recv_buf, BUFSIZE, 0);
 		recv_buf[nbyte_recvd] = '\0';
-		printf("%s" , recv_buf);
+		printf("\n%s" , recv_buf);
 		fflush(stdout);
 	}
 }
  void transf_msg(char *send_buf, char c_name[]){
- 	char c[BUFSIZE];
- 	char d[BUFSIZE];
- 	strcpy(c,":");
- 	strcpy(d,c_name);
- 	strcat(c,send_buf);
- 	strcat(d,c);
- 	strcpy(send_buf,d);
- 	printf("%s\n",send_buf);
+ 	char temp[BUFSIZE];
+ 	strcpy(temp,ANSI_COLOR_YELLOW);
+ 	strcat(temp,c_name);
+ 	strcat(temp,":");
+ 	strcat(temp,ANSI_COLOR_CYAN);
+ 	strcat(temp,send_buf);
+ 	strcat(temp,ANSI_COLOR_RESET);
+ 	strcpy(send_buf,temp);
+ 	//printf("%s\n",send_buf);
  }
 
 int main(int argc, char *argv[])
@@ -125,10 +133,10 @@ int main(int argc, char *argv[])
 	printf("%s started\n", c_name);
 	connectto_server(&sockfd, &server_addr, &my_addr, s_port, c_port, ip);
 	set_clear(sockfd, &read_fds, &master);
-	send(sockfd, c_name, strlen(c_name), 0);
+	//send(sockfd, c_name, strlen(c_name), 0);
 	fdmax = sockfd;
 	while(1){
-		printf(">");
+		//printf(">");
 		fflush(stdout);
 		read_fds = master;
 		if(select(fdmax+1, &read_fds, NULL, NULL, NULL) == -1){

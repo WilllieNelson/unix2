@@ -104,7 +104,7 @@ void send_recv(int i, int sockfd, char c_name[])
 	}else {
 		nbyte_recvd = recv(sockfd, recv_buf, BUFSIZE, 0);
 		recv_buf[nbyte_recvd] = '\0';
-		printf("%s" , recv_buf);
+		printf("%s\n" , recv_buf);
 		fflush(stdout);
 	}
 }
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
 	printf("%s started\n", c_name);
 	connectto_server(&sockfd, &server_addr, &my_addr, s_port, c_port, ip);
 	set_clear(sockfd, &read_fds, &master);
-	send(sockfd, c_name, strlen(c_name), 0);
+	//send(sockfd, c_name, strlen(c_name), 0);
 	fdmax = sockfd;
 	while(1){
 		//printf(">");

@@ -37,7 +37,7 @@ void MainWindow::on_loginButton_clicked()
     // get a connected() function call (below). If it fails,
     // we won't get any error message because we didn't connect()
     // to the error() signal from this socket.
-    socket->connectToHost(serverLineEdit->text(), 4200);
+    socket->connectToHost(serverLineEdit->text(), 5000);
 }
 
 // This gets called when the user clicks the sayButton (next to where

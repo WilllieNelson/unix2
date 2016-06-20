@@ -2,7 +2,7 @@
 #define CHATTERBOXSERVER_H
 
 #include <QStringList>
-#include <QtNetwork/QTcpServer>
+#include <QTcpServer>
 #include <QTcpSocket>
 #include <QMap>
 #include <QSet>

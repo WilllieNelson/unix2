@@ -188,6 +188,7 @@ DIST          = ../../../../QTPROG/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/qt_config.prf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/spec_post.prf \
+		../chat_client/.qmake.stash \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/default_pre.prf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/resolve_config.prf \
@@ -353,6 +354,7 @@ Makefile: ../chat_client/chat_client.pro ../../../../QTPROG/5.7/gcc_64/mkspecs/l
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/qt_config.prf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/default_pre.prf \
 		../../../../QTPROG/5.7/gcc_64/mkspecs/features/resolve_config.prf \
@@ -511,6 +513,7 @@ Makefile: ../chat_client/chat_client.pro ../../../../QTPROG/5.7/gcc_64/mkspecs/l
 ../../../../QTPROG/5.7/gcc_64/mkspecs/features/qt_config.prf:
 ../../../../QTPROG/5.7/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../../QTPROG/5.7/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../QTPROG/5.7/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../../QTPROG/5.7/gcc_64/mkspecs/features/default_pre.prf:
 ../../../../QTPROG/5.7/gcc_64/mkspecs/features/resolve_config.prf:
@@ -921,7 +924,60 @@ mainwindow.o: ../chat_client/mainwindow.cpp ../chat_client/mainwindow.h \
 		../../../../QTPROG/5.7/gcc_64/include/QtNetwork/QTcpSocket \
 		../../../../QTPROG/5.7/gcc_64/include/QtNetwork/qtcpsocket.h \
 		../../../../QTPROG/5.7/gcc_64/include/QtNetwork/qabstractsocket.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtCore/QVariant \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QAction \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qaction.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QApplication \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qapplication.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtCore/qeventloop.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtGui/qguiapplication.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QButtonGroup \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qbuttongroup.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QHeaderView \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qframe.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtGui/qvalidator.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtCore/qregularexpression.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qslider.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qstyle.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QLabel \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QLineEdit \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtGui/qtextcursor.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtGui/qtextformat.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtGui/qpen.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtGui/qtextoption.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QMenuBar \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qmenubar.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qmenu.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QPushButton \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QStatusBar \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qstatusbar.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QTextBrowser \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qtextbrowser.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qtextedit.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtGui/qtextdocument.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QToolBar \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/qtoolbar.h \
+		../../../../QTPROG/5.7/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../chat_client/mainwindow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 

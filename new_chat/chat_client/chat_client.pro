@@ -13,9 +13,14 @@ TEMPLATE = app
 
 QT += network
 
+ICON = CHATICON.icns
+
 SOURCES += main.cpp\
         mainwindow.cpp
 
 HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    CHATICON.icns

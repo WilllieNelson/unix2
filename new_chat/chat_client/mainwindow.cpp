@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-
+    setWindowTitle(tr("Chat Box"));
 }
 
 MainWindow::~MainWindow()

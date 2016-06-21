@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
 
 #define BUFSIZE 2000
 
@@ -21,13 +22,18 @@ void MainWindow::on_pushButton_connect_clicked()
     port = ui->lineEdit_p->text().toInt();
     username =  ui->lineEdit_cname->text();
     server_ip = ui->lineEdit_s->text();
-    socket->connectToHost(server_ip, port);
-
-    if(socket->state() == QAbstractSocket::ConnectedState || QAbstractSocket::ConnectingState)
+    if (port <= 0 ||username.isEmpty()||server_ip.isEmpty())
     {
-        ui->chatBox->append("Connected Successful");
-    }
+        QMessageBox::warning(this,tr("Empty input"),tr("Input can not be blank. You must fill in all the information"));
+    } else
+    {
+        socket->connectToHost(server_ip, port);
 
+        if(socket->state() == QAbstractSocket::ConnectedState || QAbstractSocket::ConnectingState)
+        {
+            ui->chatBox->append("Connected Successful");
+        }
+    }
 }
 //Send message to server, add username  before the message
 void MainWindow::on_pushButton_send_clicked()

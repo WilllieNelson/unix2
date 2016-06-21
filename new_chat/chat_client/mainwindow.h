@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTcpSocket>
-
+#include <QTextEdit>
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +29,11 @@ private slots:
 
 
     //void send_recv(int i, int sockfd, char c_name[])
+//    void on_lineEdit_message_returnPressed();
+//    void on_lineEdit_cname_returnPressed();
+
+  //  QString success_m ;
+
 
 private:
     Ui::MainWindow *ui;

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+
 }
 
 MainWindow::~MainWindow()
@@ -19,6 +20,7 @@ void MainWindow::on_pushButton_connect_clicked()
 {
     socket->connectToHost("localhost", 5000);
     username =  ui->lineEdit_cname->text();
+    ui->chatBox->append("Connected Successful");
 }
 //Send message to server, add username  before the message
 void MainWindow::on_pushButton_send_clicked()
@@ -48,3 +50,13 @@ void MainWindow::readyRead()
 //    }
 
 }
+
+//void MainWindow::on_lineEdit_message_returnPressed()
+//{
+//    connect(ui->lineEdit_message, SIGNAL(returnPressed()),ui->pushButton_send,SIGNAL(clicked()));
+//}
+
+//void MainWindow::on_lineEdit_cname_returnPressed()
+//{
+//    connect(ui->lineEdit_cname, SIGNAL(returnPressed()),ui->pushButton_connect,SIGNAL(clicked()));
+//}

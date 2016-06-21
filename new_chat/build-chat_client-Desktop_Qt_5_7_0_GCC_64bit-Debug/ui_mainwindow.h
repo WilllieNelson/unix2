@@ -56,6 +56,7 @@ public:
         pushButton_send = new QPushButton(centralWidget);
         pushButton_send->setObjectName(QStringLiteral("pushButton_send"));
         pushButton_send->setGeometry(QRect(299, 203, 101, 31));
+        pushButton_send->setAutoDefault(true);
         pushButton_connect = new QPushButton(centralWidget);
         pushButton_connect->setObjectName(QStringLiteral("pushButton_connect"));
         pushButton_connect->setGeometry(QRect(310, 0, 80, 23));
@@ -78,6 +79,9 @@ public:
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
+
+        pushButton_send->setDefault(true);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi

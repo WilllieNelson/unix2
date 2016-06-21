@@ -20,7 +20,12 @@ void MainWindow::on_pushButton_connect_clicked()
 {
     socket->connectToHost("localhost", 5000);
     username =  ui->lineEdit_cname->text();
-    ui->chatBox->append("Connected Successful");
+
+    if(socket->state() == QAbstractSocket::ConnectedState || QAbstractSocket::ConnectingState)
+    {
+        ui->chatBox->append("Connected Successful");
+    }
+
 }
 //Send message to server, add username  before the message
 void MainWindow::on_pushButton_send_clicked()

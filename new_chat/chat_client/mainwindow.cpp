@@ -18,8 +18,10 @@ MainWindow::~MainWindow()
 // Push button connected save username and make new connection
 void MainWindow::on_pushButton_connect_clicked()
 {
-    socket->connectToHost("localhost", 5000);
+    port = ui->lineEdit_p->text().toInt();
     username =  ui->lineEdit_cname->text();
+    server_ip = ui->lineEdit_s->text();
+    socket->connectToHost(server_ip, port);
 
     if(socket->state() == QAbstractSocket::ConnectedState || QAbstractSocket::ConnectingState)
     {

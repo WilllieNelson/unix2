@@ -17,6 +17,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     QString username;
+    QString server_ip;
+    int port;
 
 //    void testappend();
 

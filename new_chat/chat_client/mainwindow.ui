@@ -14,21 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLineEdit" name="lineEdit_cname">
-    <property name="geometry">
-     <rect>
-      <x>114</x>
-      <y>0</y>
-      <width>191</width>
-      <height>23</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="lineEdit_message">
     <property name="geometry">
      <rect>
-      <x>1</x>
-      <y>203</y>
+      <x>0</x>
+      <y>210</y>
       <width>291</width>
       <height>31</height>
      </rect>
@@ -37,8 +27,8 @@
    <widget class="QPushButton" name="pushButton_send">
     <property name="geometry">
      <rect>
-      <x>299</x>
-      <y>203</y>
+      <x>300</x>
+      <y>210</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -56,38 +46,79 @@
    <widget class="QPushButton" name="pushButton_connect">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>320</x>
       <y>0</y>
       <width>80</width>
-      <height>23</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
      <string>Connect</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>111</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Enter user name:</string>
-    </property>
-   </widget>
    <widget class="QTextBrowser" name="chatBox">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>30</y>
+      <y>50</y>
       <width>401</width>
-      <height>171</height>
+      <height>161</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>1</x>
+      <y>0</y>
+      <width>311</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_s">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Server:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_s"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_p">
+       <property name="text">
+        <string>Port:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_p"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>1</x>
+      <y>25</y>
+      <width>311</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_cname">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Client name:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_cname"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
